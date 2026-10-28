@@ -1,0 +1,149 @@
+# XSSH CONFIGURATION EXAMPLE — original Xbox / nxdk
+# --------------------------------------------------------------
+# Copy this file to xssh.cfg (remove .EXAMPLE.txt from the name)
+# and place xssh.cfg beside default.xbe on the Xbox (D:\xssh.cfg).
+# Edit it on your PC, then copy to the Xbox. Restart XSSH to apply changes.
+#
+# Rules:
+#   - One setting per line, exactly key=value (no quotation marks).
+#   - Lines beginning with # are comments; blank lines are ignored.
+#   - Do not append comments to values (e.g. port=22 # SSH is NOT valid).
+#   - The names and mode values shown here are case-sensitive.
+#   - This example includes EVERY xssh.cfg key implemented by XSSH.
+
+# ==============================================================
+# SSH SERVER (remote machine, not the Xbox itself)
+# ==============================================================
+
+# Required: SSH server's numeric IPv4 address. DNS names are not supported.
+host=192.168.1.10
+
+# Required port; 1-65535. Typical SSH port is 22.
+port=22
+
+# Required: SSH login username (password is entered in XSSH, never stored).
+user=myuser
+
+# Required for a successful login: SHA-256 hash of the negotiated raw SSH
+# host-key blob, as 64 hexadecimal characters. For first connection, leave
+# blank: XSSH will DISPLAY the key hash but REFUSE login. Confirm the hash
+# independently with the server administrator, then paste it after '='.
+# NEVER trust a fingerprint simply because it was displayed at first login.
+hostkey_sha256=
+
+# ==============================================================
+# VIDEO (output mode for the original Xbox)
+# ==============================================================
+
+# Default: inherit the active display dimensions at XSSH startup,
+# normally the dashboard/launcher mode if the XBE launch preserved it.
+# This does NOT automatically pick the lowest supported resolution.
+video_mode=auto
+
+# Alternatives: replace the video_mode line above with ONE of these
+# (remove its leading #). Availability depends on cables, Xbox video
+# settings, nxdk HAL support, and any custom BIOS modifications.
+#video_mode=480i
+#video_mode=480p
+#video_mode=576i
+#video_mode=720p
+#video_mode=1080i
+
+# Standard modes with an explicit integer refresh rate in Hz:
+#video_mode=480p@60
+#video_mode=720p@60
+#video_mode=1080i@60
+
+# Exact-resolution / custom-BIOS examples (only if reported by nxdk HAL):
+#video_mode=640x480@60
+#video_mode=720x480i@60
+#video_mode=800x600@60
+#video_mode=1024x768p@60
+#video_mode=1280x720p@60
+#video_mode=1440x900@60
+#video_mode=1920x1080@30
+#
+# General format: video_mode=WIDTHxHEIGHT[@HZ], or WIDTHxHEIGHTp@HZ,
+# or WIDTHxHEIGHTi@HZ. WIDTH/HEIGHT must be within 320-4096 / 200-2160.
+# Refresh must be an integer 1-240 Hz. A specified timing is NOT guaranteed
+# to be supported; XSSH falls back if the HAL cannot initialize it.
+# NOTE: auto reads the current NV2A display resolution BEFORE setting a mode
+# and matches it against HAL-advertised modes. If the BIOS/launcher resets the
+# display during XBE launch, the prior dashboard mode cannot be recovered.
+# If startup mode is unreadable/unsupported, XSSH uses a safe fallback and
+# displays a warning; it does not choose 640x480 by default.
+
+# ==============================================================
+# TERMINAL FONT SIZE
+# ==============================================================
+
+# Default bitmap glyph height, measured in logical (640x480) screen pixels.
+# Accepted whole numbers: 8 through 24 (inclusive); no decimal or suffix.
+# Smaller = more terminal columns and rows, larger = fewer.
+# At 12, XSSH uses its original 8x12 font and 80x24 terminal grid.
+font_size=12
+
+# Examples: choose ONE, replacing font_size=12 above.
+#font_size=8
+#font_size=10
+#font_size=14
+#font_size=16
+#font_size=20
+#font_size=24
+
+# The UI headings, status/footer, and on-screen controller keyboard retain
+# their original sizes. Only the terminal text and its grid change.
+# XSSH requests the corresponding PTY columns/rows from the SSH server.
+# Restart XSSH after changing font_size. The original bitmap is scaled;
+# no new font file is required. This is a logical size, scaled with video_mode.
+
+# ==============================================================
+# THEME (monochrome terminal and user interface)
+# ==============================================================
+
+# Default: bright Xbox-green (#9BF00B) text on a pure black background.
+# Applies to the terminal, title, status, and software keyboard.
+theme=xbox
+
+# Alternative: black text on a bright Xbox-green (#9BF00B) background.
+# Replace the theme line above with this, do not add a second active theme.
+#theme=inverted_xbox
+
+# The theme overrides colors requested by remote ANSI applications, but
+# preserves the terminal's existing cursor movement and text behavior.
+# Selected on-screen keys reverse foreground/background for visibility.
+# Restart XSSH after changing theme. Names are case-sensitive.
+
+# ==============================================================
+# XBOX NETWORK (the console's own LAN connection)
+# ==============================================================
+
+# dhcp   = DHCP (default; may or may not receive dashboard's old IP)
+# static = use network_ip, network_netmask and network_gateway below
+network_mode=dhcp
+
+# Alternative (choose only one network_mode):
+#network_mode=static
+
+# These three settings matter ONLY when network_mode=static.
+# They are ignored in dhcp mode. Set these to your own LAN.
+# Do not assign an address already used by another device.
+network_ip=192.168.1.50
+network_netmask=255.255.255.0
+network_gateway=192.168.1.1
+
+# On an isolated network without a router, the gateway can be 0.0.0.0:
+#network_gateway=0.0.0.0
+#
+# Example for a fully static setup:
+#   Change network_mode=dhcp above to network_mode=static.
+#   Change network_ip, network_netmask, network_gateway to your LAN values.
+#   Remember: host=... points to the SSH server, NOT the Xbox.
+#
+# For a stable address while keeping DHCP, reserve the Xbox's MAC address
+# in your router's DHCP settings.
+
+# ==============================================================
+# There are no xssh.cfg options for the password, DNS names, terminal size,
+# USB keyboard layout, or SSH private keys in this version of XSSH.
+# ==============================================================
