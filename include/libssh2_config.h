@@ -2,8 +2,12 @@
 #ifndef XSSH_LIBSSH2_CONFIG_H
 #define XSSH_LIBSSH2_CONFIG_H
 #define HAVE_INTTYPES_H 1
+#ifndef NXDK
 #define HAVE_SYS_SOCKET_H 1
+#endif
 #define HAVE_SELECT 1
+#ifndef NXDK
 #define HAVE_SYS_SELECT_H 1
+#endif
 #define HAVE_SNPRINTF 1
 #endif

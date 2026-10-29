@@ -8,4 +8,5 @@ fi
 if [ ! -d third_party/mbedtls/.git ]; then
   git clone --depth 1 --branch v3.6.5 https://github.com/Mbed-TLS/mbedtls.git third_party/mbedtls
 fi
-printf 'Dependencies fetched. Build with: make NXDK_DIR=/path/to/nxdk\n'
+python3 tools/patch-libssh2-nxdk.py
+printf 'Dependencies fetched and nxdk libssh2 header patched. Build with: make NXDK_DIR=/path/to/nxdk\n'

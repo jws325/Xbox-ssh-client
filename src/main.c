@@ -8,7 +8,6 @@
 #include <ctype.h>
 #include <SDL.h>
 #include <hal/video.h>
-#include <nxdk/mount.h>
 #include <lwip/sockets.h>
 #include <lwip/inet.h>
 #include <libssh2.h>
@@ -545,11 +544,8 @@ int main(void) {
             snprintf(line,sizeof(line),"Network: %s, Xbox IP: %s",
                      xssh_network_mode_name(a->network.mode),a->network.address);
             logline(a,line);
-            if(!nxIsDriveMounted('E') &&
-               !nxMountDrive('E',"\\Device\\Harddisk0\\Partition1\\"))
-                status(a,"Failed to mount E: partition");
-            else if(xssh_rng_prepare()!=0)
-                status(a,"Missing/invalid E:\\xssh-seed.bin (64 secret random bytes)");
+            if(xssh_rng_prepare()!=0)
+                status(a,"Cannot read/update D:\\xssh-seed.bin (64 bytes; writable HDD required)");
             else if(libssh2_init(0)!=0)
                 status(a,"libssh2_init failed");
             else {

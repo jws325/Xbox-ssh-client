@@ -22,24 +22,112 @@ this environment**. Treat as an initial port rather than a verified XBE.
    its recursive submodules, and ensure its LLVM tools are on PATH (run
    `source /path/to/nxdk/bin/activate`, or build inside its activated shell).
 2. In this XSSH folder, execute `./tools/fetch-deps.sh`. It fetches pinned
-   versions of libssh2 and Mbed TLS. Their licenses remain with their source.
+   versions of libssh2 and Mbed TLS, then patches libssh2 1.11.1 for nxdk's
+   missing `<sys/stat.h>`. The patch preserves normal host builds and uses an
+   opaque `struct stat` declaration on nxdk; XSSH does not build libssh2's
+   SCP or SFTP features. Their licenses remain with their source.
 3. Run `make NXDK_DIR=/path/to/nxdk`. The Makefile enables nxdk's USB HID
-   class driver (`NXDK_USB_ENABLE_HID=y`) and builds the SDL joystick backend
-   with `SDL_DISABLE_JOYSTICK_INIT_DELAY` so the HID driver can be registered
-   **before** first USB enumeration. **Build against an nxdk tree where SDL2
-   is freshly built with that flag** (if the SDL library was compiled previously,
-   clean/rebuild the nxdk SDL2 objects before running XSSH's build). The Makefile compiles both crypto and
-   SSH2 source under the nxdk toolchain and creates `bin/default.xbe` and
-   `XSSH.iso` if the port compiles successfully. If your nxdk revision differs,
-   you may need to adapt C flags/feature checks or the third-party source list.
-4. Deploy `bin/default.xbe` and an edited `xssh.cfg` into the *same directory*
-   on the Xbox (`D:\xssh.cfg` from the executable). You need a homebrew-capable
-   original Xbox connected by wired Ethernet.
-5. On a trusted PC run `python3 tools/make-seed.py`. Transfer the resulting
-   **secret** `xssh-seed.bin` into `E:\xssh-seed.bin` on the Xbox. **Do not
-   distribute this file with an XBE or ISO, expose it publicly, or use the
-   same file on multiple consoles.** `E:` must be writable; the application mounts the E: partition and
-   replaces its seed with a SHA-512-derived successor before each session.
+   class driver (`NXDK_USB_ENABLE_HID=y`) and builds SDL's joystick backend
+   with `SDL_DISABLE_JOYSTICK_INIT_DELAY`. If SDL was previously compiled
+   without that flag, clean/rebuild the nxdk SDL2 objects first. Compilation
+   generates `bin/default.xbe`; the new packaging step also creates `release/`.
+4. **Copy all three files from `release/` together** to a writable hard-drive
+   folder on your Xbox, such as `F:\Apps\XSSH\`:
+
+   ```text
+   release/
+       default.xbe
+       xssh.cfg
+       xssh-seed.bin
+   ```
+
+   The native executable is named **`default.xbe`** (not `default.bin`).
+   At runtime, the launcher's `D:` mapping points at the XBE's directory;
+   XSSH reads `D:\xssh.cfg` and `D:\xssh-seed.bin` there. The 64-byte
+   secret is generated automatically on the build PC using `secrets.token_bytes`
+   **only when the `release/` seed is missing**. Subsequent `make` runs keep the
+   existing release seed instead of silently replacing it.
+5. **Keep `xssh-seed.bin` private.** Use a unique build seed per console, never
+   publish it in a source or release archive, and do not copy one seed onto
+   multiple Xboxes. When updating XSSH on an existing console, copy the new
+   `default.xbe` and `xssh.cfg` but **do not overwrite the console's seed**.
+   XSSH rewrites its seed during startup as part of the cryptographic ratchet.
+   Therefore the application directory must be **writable**: running XSSH from
+   a read-only DVD/ISO is unsupported. If your dashboard does not map `D:` to
+   the writable launch folder, XSSH reports a seed read/update failure. This
+   behavior has not yet been verified on original Xbox hardware.
+
+To assemble the folder again after an incremental build, run:
+
+```sh
+make release NXDK_DIR="$HOME/nxdk"
+```
+
+To start a *new console installation*, remove the local `release/xssh-seed.bin`
+before building to generate a new unique secret; never do this on an Xbox that
+has already been using the seed without considering the security consequences.
+
+
+
+### Mbed TLS linker fix (`mbedtls_strerror`)
+
+If the nxdk linker reports `undefined symbol: _mbedtls_strerror`, XSSH
+needs Mbed TLS's error-reporting implementation as part of its crypto build.
+The included Makefile compiles `third_party/mbedtls/library/error.c` and
+`include/mbedtls_config_xbox.h` enables `MBEDTLS_ERROR_C`. This provides
+Mbed TLS's actual error messages instead of a dummy implementation.
+
+To patch an older source checkout without replacing it:
+
+```sh
+python3 tools/fix-mbedtls-strerror.py .
+make NXDK_DIR="$HOME/nxdk" -j4
+```
+
+The `lld: warning: .edata=.rdata: already merged into .edataxb` warning
+is separate and does not prevent linking.
+
+### nxdk / Mbed TLS `sal.h` compatibility
+
+If Mbed TLS 3.6.5 fails on `#include <sal.h>` from
+`mbedtls/platform_util.h`, the source config already defines
+`MBEDTLS_CHECK_RETURN` as Clang's `warn_unused_result` attribute.
+This prevents the Microsoft SDK-specific branch, without disabling
+important return-value warnings or adding dummy Microsoft headers.
+For older XSSH checkouts, run `python3 tools/fix-mbedtls-sal-config.py`.
+No edit to the downloaded third-party Mbed TLS source is required.
+
+## libssh2 nxdk build compatibility (`sys/stat.h`)
+
+If the previous XSSH build failed with:
+
+```text
+third_party/libssh2/include/libssh2.h:100:10: fatal error: 'sys/stat.h' file not found
+```
+
+run the patched dependency script again from the **project root** (it is safe
+on an existing clone):
+
+```sh
+./tools/fetch-deps.sh
+make NXDK_DIR=/path/to/nxdk
+```
+
+Or apply just the compatibility patch without fetching anything:
+
+```sh
+python3 tools/patch-libssh2-nxdk.py
+```
+
+The patch makes the POSIX `struct stat` type **opaque for nxdk only**. This is
+valid for the SSH terminal, which does not implement file transfers. It is
+**not** a working `stat()` implementation, and SCP/SFTP remain deliberately
+excluded from the Makefile. The Makefile also compiles libssh2's `mbedtls.c`
+backend required by the configured TLS implementation.
+
+Run the native regression test with `python3 tools/test-libssh2-patch.py`.
+This is a focused header fix, **not proof of a successful nxdk cross-build**;
+other nxdk portability issues may still be present.
 
 ## Video output configuration (new)
 
@@ -359,3 +447,147 @@ cc -std=c11 -Wall -Wextra -Werror -Iinclude src/terminal.c tools/test-terminal.c
 - `include/mbedtls_config_xbox.h`: crypto-only Mbed TLS configuration.
 - `include/libssh2_config.h`: libssh2 platform features.
 - `tools/*`: pinned upstream fetcher, PC random-seed generator, font generator.
+
+## nxdk build compatibility: missing `sys/types.h` / `sys/stat.h`
+
+The standard nxdk PDCLib environment does not provide the complete POSIX
+headers expected by upstream libssh2 1.11.1. After fetching dependencies,
+`tools/fetch-deps.sh` runs `tools/patch-libssh2-nxdk.py` automatically.
+This patches libssh2 for XSSH's **SSH-terminal-only** use:
+
+- Avoids unprovided `sys/stat.h` / `sys/types.h` and supplies the necessary
+  public API typedefs without creating fake POSIX filesystem implementations.
+- Uses the existing nxdk/lwIP socket headers instead of assuming that
+  `<sys/socket.h>` and `<sys/select.h>` exist.
+- Avoids `<unistd.h>` in the SFTP public header. SCP/SFTP source files are
+  still not included in the XSSH build.
+
+To re-apply the patch to an existing checkout:
+
+```sh
+cd /path/to/xbox-nxdk-ssh
+python3 tools/patch-libssh2-nxdk.py
+make NXDK_DIR="$HOME/nxdk" -j4
+```
+
+The compatibility patch is tested with native header compilation but does
+**not** prove a complete Xbox cross-build. Other POSIX portability issues may
+still arise depending on nxdk and libssh2 versions.
+
+## Mbed TLS build compatibility (`MBEDTLS_RSA_C`)
+
+If nxdk compilation reports:
+
+```text
+error: "MBEDTLS_RSA_C defined, but none of the PKCS1 versions enabled"
+```
+
+this source archive enables `MBEDTLS_PKCS1_V15` in
+`include/mbedtls_config_xbox.h`. This is required for PKCS#1 v1.5 RSA
+signatures used with SSH RSA/SHA-2. It does not activate legacy SSH
+`ssh-rsa`/SHA-1 signatures (that algorithm remains disabled separately).
+
+To patch an older checkout in place, run from the XSSH project root:
+
+```sh
+python3 tools/fix-mbedtls-rsa-config.py
+make NXDK_DIR="$HOME/nxdk" -j4
+```
+
+Run `python3 tools/test-mbedtls-config.py` for a native configuration check.
+Full nxdk cross-compilation remains unverified.
+
+### nxdk libssh2 Windows-compatibility note
+
+Some nxdk compiler setups define `_MSC_VER` although the Xbox does not
+include MSVC CRT types such as `SSIZE_T` or headers such as `<io.h>`.
+`tools/patch-libssh2-nxdk.py` automatically excludes the MSVC-specific
+branches in `libssh2.h` whenever `NXDK` is defined; the SSH terminal uses
+portable libssh2 types and nxdk's lwIP socket implementation.
+If upgrading an older checkout, run `tools/patch-libssh2-nxdk.py` again.
+
+## nxdk-specific libssh2 portability
+
+The nxdk Clang toolchain may define `_MSC_VER` despite not shipping Microsoft
+CRT headers such as `io.h` or `sal.h`. XSSH defines `NXDK=1` for **every**
+source file in `Makefile` and applies compatibility guards to libssh2 1.11.1
+with `tools/patch-libssh2-nxdk.py`. Do not remove `-DNXDK=1` from
+`NXDK_CFLAGS`, or libssh2 may select the Microsoft-only `SSIZE_T` / `io.h`
+branches. The SSH-only port does not provide SCP/SFTP file-stat support.
+
+On a clean checkout run:
+
+```sh
+./tools/fetch-deps.sh
+make NXDK_DIR="$HOME/nxdk" -j4
+```
+
+To rerun all independent compile steps and capture diagnostic output:
+
+```sh
+make NXDK_DIR="$HOME/nxdk" -k -j1 V=1 2>&1 | tee xssh-build.log
+```
+
+**Build verification:** Native tests do not substitute for a full nxdk
+cross-build and actual Xbox hardware testing.
+
+### nxdk `time_t` / libssh2 public header compatibility (October 2026)
+
+The libssh2 1.11.1 public header declares `libssh2_scp_send64` with
+`time_t` parameters even in SSH-terminal-only builds. nxdk's PDCLib
+provides `time_t` via the standard `<time.h>` header; POSIX
+`<sys/types.h>` is not available. The dependency patch now includes
+`<time.h>` from the nxdk compatibility section of `libssh2.h`.
+
+If you already downloaded dependencies before this release, run:
+
+```sh
+python3 tools/patch-libssh2-nxdk.py
+make NXDK_DIR="$HOME/nxdk" -j4
+```
+
+The full Xbox cross-build remains unverified until tested with nxdk.
+
+### nxdk libssh2 portability
+
+The dependency-fetch script applies Xbox-specific libssh2 1.11.1 header fixes,
+including `time_t` from `<time.h>` for public SCP declarations (SCP is not built).
+Run `./tools/fetch-deps.sh` after extracting this source and before building.
+These fixes are tested with host-compiler smoke tests; a complete nxdk `.xbe`
+build has not yet been verified.
+
+### libssh2 ChaCha20/Poly1305 BSD type compatibility (nxdk)
+
+libssh2 1.11.1 uses `u_int` and `u_char` in its OpenBSD ChaCha20 and
+Poly1305 code. nxdk's PDCLib does not define those BSD aliases. When
+`tools/fetch-deps.sh` runs, `tools/patch-libssh2-nxdk.py` now injects
+`include/xssh_nxdk_bsd_types.h` into the two libssh2 headers. The aliases
+are fixed-width (`uint32_t` and `uint8_t`), only active for `NXDK=1`.
+ChaCha20-Poly1305 is **not disabled**.
+
+If dependencies were previously fetched, reapply the patch without
+re-downloading them:
+
+```sh
+python3 tools/patch-libssh2-nxdk.py
+make NXDK_DIR="$HOME/nxdk" -j4
+```
+
+Run the targeted native regression test with:
+
+```sh
+python3 tools/test-chacha-bsd-types.py
+```
+
+### Session socket / Mbed TLS key-file portability
+
+`tools/patch-libssh2-nxdk.py` removes the POSIX-only `fcntl.h` requirement
+from libssh2 `session.c` for nxdk. It uses nxdk's lwIP
+`ioctlsocket(FIONBIO)` for nonblocking SSH connections. This port assumes
+XSSH passes a freshly created, initially blocking TCP socket.
+
+`MBEDTLS_FS_IO` is enabled so the key-file parsing functions referenced
+by libssh2 are present at link time. This does not enable SSH key login in
+the XSSH UI; XSSH still prompts for a password.
+
+Run `python3 tools/patch-libssh2-nxdk.py` after fetching dependencies.

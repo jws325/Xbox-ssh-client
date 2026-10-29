@@ -1,6 +1,6 @@
 /*
  * Original Xbox entropy adapter. No claim that the Xbox has a hardware TRNG.
- * Supply a 64-byte secret from a PC CSPRNG at E:\\xssh-seed.bin.
+ * Load the 64-byte build-generated seed beside default.xbe at D:\\xssh-seed.bin.
  * The seed file is replaced with a SHA-512-derived successor BEFORE use.
  * The one-way ratchet avoids reusing session seeds across normal boots.
  * This is not a substitute for a real OS CSPRNG, and flash/hard-disk
@@ -13,7 +13,7 @@
 #include <mbedtls/entropy.h>
 #include "rng.h"
 
-#define SEED_FILE "E:\\xssh-seed.bin"
+#define SEED_FILE "D:\\xssh-seed.bin"
 static unsigned char seed[64];
 static uint32_t request_counter;
 static int seeded;
