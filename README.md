@@ -15,6 +15,13 @@ and more!
 
 Currently, only password authentication is supported.
 
+## Shortcuts
+
+Control + a (toggle antialiasing)\
+Control + f (switch font)\
+Control + = (increase font size)\
+Control + - (decrease font size)
+
 ## To build from source:
 
 ```sh
