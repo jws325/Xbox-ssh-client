@@ -13,6 +13,8 @@ Exit, reboot, or shutdown from app\
 USB keyboard supported\
 and more!
 
+Currently, only password authentication is supported.
+
 ## To build from source:
 
 ```sh
