@@ -21,8 +21,9 @@ TLS_C = aes asn1parse asn1write base64 bignum bignum_core bignum_mod bignum_mod_
         pk_wrap pkcs12 pkcs5 pkparse pkwrite platform platform_util ripemd160 rsa \
         rsa_alt_helpers sha1 sha256 sha512
 
-SRCS = $(CURDIR)/src/main.c $(CURDIR)/src/font_size.c $(CURDIR)/src/terminal.c $(CURDIR)/src/theme.c $(CURDIR)/src/rng.c \
+SRCS = $(CURDIR)/src/main.c $(CURDIR)/src/connect_form.c $(CURDIR)/src/known_hosts.c $(CURDIR)/src/font_size.c $(CURDIR)/src/font_style.c $(CURDIR)/src/terminal.c $(CURDIR)/src/theme.c $(CURDIR)/src/rng.c \
        $(CURDIR)/src/usb_keyboard.c $(CURDIR)/src/hid_keys.c \
+       $(CURDIR)/src/xssh_led.c $(CURDIR)/src/xssh_saver.c \
        $(CURDIR)/src/video_modes.c $(CURDIR)/src/video_xbox.c \
        $(CURDIR)/src/network_config.c $(CURDIR)/src/network_xbox.c
 SRCS += $(addprefix $(SSHROOT)/src/,$(addsuffix .c,$(SSH_C)))
@@ -51,7 +52,8 @@ RELEASE_DIR := $(CURDIR)/release
 
 .PHONY: release
 all: release
-release: $(OUTPUT_DIR)/default.xbe $(CURDIR)/xssh.cfg $(CURDIR)/tools/make-seed.py
+release: $(OUTPUT_DIR)/default.xbe $(CURDIR)/xssh.cfg $(CURDIR)/tools/make-seed.py $(CURDIR)/tools/verify-built-xbe.py $(CURDIR)/include/xssh_build.h
+	@python3 "$(CURDIR)/tools/verify-built-xbe.py" "$(OUTPUT_DIR)/default.xbe"
 	@mkdir -p "$(RELEASE_DIR)"
 	@cp -f "$(OUTPUT_DIR)/default.xbe" "$(RELEASE_DIR)/default.xbe"
 	@cp -f "$(CURDIR)/xssh.cfg" "$(RELEASE_DIR)/xssh.cfg"
@@ -63,4 +65,6 @@ release: $(OUTPUT_DIR)/default.xbe $(CURDIR)/xssh.cfg $(CURDIR)/tools/make-seed.
 	else \
 	    python3 "$(CURDIR)/tools/make-seed.py" "$(RELEASE_DIR)/xssh-seed.bin"; \
 	fi
-	@echo "[ RELEASE ] $(RELEASE_DIR) (default.xbe, xssh.cfg, xssh-seed.bin)"
+	@python3 "$(CURDIR)/tools/create-demo-saver.py" "$(RELEASE_DIR)/screensaver.xsv" --if-missing
+	@echo "[ RELEASE ] verified interactive-login XBE -> $(RELEASE_DIR)"
+	@sha256sum "$(RELEASE_DIR)/default.xbe" "$(OUTPUT_DIR)/default.xbe"

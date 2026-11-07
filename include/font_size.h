@@ -11,6 +11,7 @@
 #define XSSH_TERM_AREA_HEIGHT 288
 
 /* Parse a decimal font height strictly; return zero for invalid settings. */
+void xssh_font_layout_for_height(int size,int area_height,int *glyph_width,int *glyph_height,int *columns,int *rows);
 int xssh_font_parse(const char *value, int *size);
 
 /* Compute the dimensions of one glyph and of the terminal grid. */

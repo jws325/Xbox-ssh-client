@@ -75,6 +75,28 @@ int main(void) {
         xssh_hid_keys_report(&s,invalid,2460,collect,&c);
         assert(c.count==20); /* rollover preserved */
     }
+    report(&s,&c,0,0,2470);
+    report(&s,&c,0x11,0x2e,2480); /* Ctrl+=, no Shift */
+    assert(c.events[20].kind==XSSH_KEY_FONT_INCREASE);
+    report(&s,&c,0,0,2490);
+    report(&s,&c,0x11|0x22,0x2e,2495); /* Ctrl+Shift+= still supported */
+    assert(c.events[21].kind==XSSH_KEY_FONT_INCREASE);
+    report(&s,&c,0,0,2498);
+    report(&s,&c,0x11,0x2d,2500); /* Ctrl+- */
+    assert(c.events[22].kind==XSSH_KEY_FONT_DECREASE);
+    report(&s,&c,0,0,2510);
+    report(&s,&c,0x11,0x57,2520); /* keypad plus */
+    assert(c.events[23].kind==XSSH_KEY_FONT_INCREASE);
+    report(&s,&c,0,0,2530);
+    report(&s,&c,0x11,0x56,2540); /* keypad minus */
+    assert(c.events[24].kind==XSSH_KEY_FONT_DECREASE);
+    report(&s,&c,0,0,2550);
+    report(&s,&c,0x11,0x09,2560); /* Ctrl+F */
+    assert(c.events[25].kind==XSSH_KEY_FONT_CYCLE);
+    report(&s,&c,0,0,2570);
+    report(&s,&c,0x11,0x04,2580); /* Ctrl+A is local, not ASCII SOH */
+    assert(c.events[26].kind==XSSH_KEY_TOGGLE_ANTIALIASING);
+    report(&s,&c,0,0,2590);
     printf("HID keyboard decode tests: OK (%d emitted events)\n",c.count);
     return 0;
 }

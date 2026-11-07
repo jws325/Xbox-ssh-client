@@ -91,6 +91,20 @@ static void send_key(XsshHidKeys *s,uint8_t key,uint8_t mods,
     unsigned char ch;
     const char *seq;
 
+    /* Ctrl+= (Shift not required; Ctrl+Shift+= also works) / Ctrl+minus. These are local
+       XSSH shortcuts and must never reach the remote shell. */
+    if(ctrl && (key==0x2e || key==0x57)) {
+        emit_special(sink,ctx,XSSH_KEY_FONT_INCREASE);return;
+    }
+    if(ctrl && (key==0x2d || key==0x56)) {
+        emit_special(sink,ctx,XSSH_KEY_FONT_DECREASE);return;
+    }
+    if(ctrl && key==0x04) { /* HID A = Ctrl+A: toggle local font antialiasing. */
+        emit_special(sink,ctx,XSSH_KEY_TOGGLE_ANTIALIASING);return;
+    }
+    if(ctrl && key==0x09) { /* HID F = Ctrl+F: cycle local font. */
+        emit_special(sink,ctx,XSSH_KEY_FONT_CYCLE);return;
+    }
     if(key==0x39) {s->caps_lock^=1;return;}
     if(key==0x53) return; /* NumLock: keypad is always numeric in this port */
     if(key==0x28 || key==0x58) {emit_special(sink,ctx,XSSH_KEY_ENTER);return;}

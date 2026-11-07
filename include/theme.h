@@ -20,8 +20,9 @@ typedef struct {
 /* "xbox" is the default. Returns 0 for unsupported names. */
 int xssh_theme_parse(const char *name, XsshTheme *out);
 const char *xssh_theme_name(XsshTheme theme);
-/* Both themes are deliberately monochrome, including remote ANSI foregrounds. */
+/* Themes set default terminal colors; ANSI SGR may override them. */
 XsshThemeColors xssh_theme_colors(XsshTheme theme);
-XsshRgb xssh_theme_terminal_color(XsshTheme theme, unsigned int ansi_color);
+XsshRgb xssh_theme_terminal_color(XsshTheme theme, uint32_t ansi_color);
+XsshRgb xssh_theme_terminal_background(XsshTheme theme, uint32_t ansi_color);
 
 #endif

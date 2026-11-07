@@ -23,10 +23,15 @@ int main(void) {
     assert(xbox.background.r == 0 && xbox.background.g == 0 && xbox.background.b == 0);
     assert(same(xbox.foreground, inverted.background));
     assert(same(xbox.background, inverted.foreground));
-    for(unsigned int ansi=0; ansi<256; ansi++) {
-        assert(same(xssh_theme_terminal_color(XSSH_THEME_XBOX, ansi), xbox.foreground));
-        assert(same(xssh_theme_terminal_color(XSSH_THEME_INVERTED_XBOX, ansi), inverted.foreground));
-    }
+    assert(same(xssh_theme_terminal_color(XSSH_THEME_XBOX,0x02000000u),xbox.foreground));
+    assert(same(xssh_theme_terminal_background(XSSH_THEME_XBOX,0x02000000u),xbox.background));
+    assert(same(xssh_theme_terminal_color(XSSH_THEME_INVERTED_XBOX,0x02000000u),inverted.foreground));
+    XsshRgb red=xssh_theme_terminal_color(XSSH_THEME_XBOX,9);
+    assert(red.r==241&&red.g==76&&red.b==76);
+    XsshRgb rgb=xssh_theme_terminal_color(XSSH_THEME_XBOX,0x01ffaa44u);
+    assert(rgb.r==255&&rgb.g==170&&rgb.b==68);
+    XsshRgb gray=xssh_theme_terminal_background(XSSH_THEME_XBOX,244);
+    assert(gray.r==gray.g&&gray.g==gray.b);
     puts("theme tests passed");
     return 0;
 }

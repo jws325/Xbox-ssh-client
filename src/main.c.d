@@ -1,5 +1,5 @@
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/src/main.obj: \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/src/main.c \
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/src/main.obj: \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/src/main.c \
   /home/james/nxdk/lib/pdclib/include/stdio.h \
   /home/james/nxdk/lib/pdclib/include/pdclib/_PDCLIB_lib_ext1.h \
   /home/james/nxdk/lib/pdclib/include/pdclib/_PDCLIB_int.h \
@@ -119,26 +119,34 @@
   /home/james/nxdk/lib/net/lwip/src/include/lwip/inet.h \
   /home/james/nxdk/lib/net/lwip/src/include/lwip/errno.h \
   /home/james/nxdk/lib/pdclib/include/errno.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/libssh2/include/libssh2.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/libssh2/include/libssh2.h \
   /home/james/nxdk/lib/pdclib/include/time.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/sha256.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/private_access.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/build_info.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/mbedtls_config_xbox.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_legacy_crypto.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_x509.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_ssl.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/check_config.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/font8x12.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/terminal.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/rng.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/usb_keyboard.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/hid_keys.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/video_xbox.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/network_config.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/network_xbox.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/theme.h \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/font_size.h
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/sha256.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/private_access.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/build_info.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/mbedtls_config_xbox.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_legacy_crypto.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_x509.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_ssl.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/check_config.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font8x12.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font8x12_aa.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/unicode_glyphs.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/terminal.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/rng.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/usb_keyboard.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/hid_keys.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/video_xbox.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/network_config.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/network_xbox.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/theme.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font_size.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font_style.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/connect_form.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/known_hosts.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/xssh_build.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/xssh_led.h \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/xssh_saver.h
 
 /home/james/nxdk/lib/pdclib/include/stdio.h:
 
@@ -380,42 +388,58 @@
 
 /home/james/nxdk/lib/pdclib/include/errno.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/libssh2/include/libssh2.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/libssh2/include/libssh2.h:
 
 /home/james/nxdk/lib/pdclib/include/time.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/sha256.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/sha256.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/private_access.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/private_access.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/build_info.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/build_info.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/mbedtls_config_xbox.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/mbedtls_config_xbox.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_legacy_crypto.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_legacy_crypto.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_x509.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_x509.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_ssl.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/config_adjust_ssl.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/check_config.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/third_party/mbedtls/include/mbedtls/check_config.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/font8x12.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font8x12.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/terminal.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font8x12_aa.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/rng.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/unicode_glyphs.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/usb_keyboard.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/terminal.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/hid_keys.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/rng.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/video_xbox.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/usb_keyboard.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/network_config.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/hid_keys.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/network_xbox.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/video_xbox.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/theme.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/network_config.h:
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/font_size.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/network_xbox.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/theme.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font_size.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/font_style.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/connect_form.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/known_hosts.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/xssh_build.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/xssh_led.h:
+
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/xssh_saver.h:

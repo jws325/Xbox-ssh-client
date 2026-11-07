@@ -1,6 +1,6 @@
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/src/network_config.obj: \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/src/network_config.c \
-  /home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/network_config.h \
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/src/network_config.obj: \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/src/network_config.c \
+  /home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/network_config.h \
   /home/james/nxdk/lib/pdclib/include/stddef.h \
   /home/james/nxdk/lib/pdclib/include/pdclib/_PDCLIB_lib_ext1.h \
   /home/james/nxdk/lib/pdclib/include/pdclib/_PDCLIB_int.h \
@@ -16,7 +16,7 @@
   /home/james/nxdk/lib/pdclib/include/stdio.h \
   /home/james/nxdk/lib/pdclib/include/string.h
 
-/home/james/XSSH-release-folder-auto-seed-2026-10-29/xbox-nxdk-ssh/include/network_config.h:
+/home/james/XSSH-v10-2-Ctrl-A-Antialiasing-Toggle/xbox-nxdk-ssh/include/network_config.h:
 
 /home/james/nxdk/lib/pdclib/include/stddef.h:
 

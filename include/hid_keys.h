@@ -7,7 +7,7 @@
    and up to six currently-held USB usage IDs.  This decoder is portable. */
 typedef enum {
     XSSH_KEY_TEXT, XSSH_KEY_ENTER, XSSH_KEY_BACKSPACE,
-    XSSH_KEY_SEQUENCE
+    XSSH_KEY_SEQUENCE, XSSH_KEY_FONT_INCREASE, XSSH_KEY_FONT_DECREASE, XSSH_KEY_FONT_CYCLE, XSSH_KEY_TOGGLE_ANTIALIASING
 } XsshKeyKind;
 
 typedef struct {

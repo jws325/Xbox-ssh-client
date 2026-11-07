@@ -2,6 +2,7 @@
 # --------------------------------------------------------------
 # Copy this file to xssh.cfg (remove .EXAMPLE.txt from the name)
 # and place xssh.cfg beside default.xbe on the Xbox (D:\xssh.cfg).
+# The SSH login form is interactive: IP -> port -> username -> password.
 # Edit it on your PC, then copy to the Xbox. Restart XSSH to apply changes.
 #
 # Rules:
@@ -15,20 +16,23 @@
 # SSH SERVER (remote machine, not the Xbox itself)
 # ==============================================================
 
-# Required: SSH server's numeric IPv4 address. DNS names are not supported.
+# Optional form prefills; XSSH prompts for all four fields on EVERY launch.
+# The first character you type replaces any prefilled host/port/username.
+# You can comment out host and user to start with empty fields.
+# Numeric IPv4 only; DNS names are not supported.
 host=192.168.1.10
 
-# Required port; 1-65535. Typical SSH port is 22.
+# Default TCP port in the login form is 22; the user may change it on-screen.
 port=22
 
-# Required: SSH login username (password is entered in XSSH, never stored).
+# Optional login username prefill. Password is entered only on-screen.
 user=myuser
 
-# Required for a successful login: SHA-256 hash of the negotiated raw SSH
-# host-key blob, as 64 hexadecimal characters. For first connection, leave
-# blank: XSSH will DISPLAY the key hash but REFUSE login. Confirm the hash
-# independently with the server administrator, then paste it after '='.
-# NEVER trust a fingerprint simply because it was displayed at first login.
+# Optional exact-host/port pin: 64 hex chars of SHA-256 over the SSH host key.
+# Applies ONLY if you connect to the exact host/port configured above.
+# With no pin, unknown server keys are shown for explicit confirmation
+# BEFORE the password is transmitted. Verify fingerprints independently!
+# Accepted keys are remembered in D:\xssh-known-hosts.txt; changed keys fail.
 hostkey_sha256=
 
 # ==============================================================
@@ -82,10 +86,22 @@ video_mode=auto
 # Smaller = more terminal columns and rows, larger = fewer.
 # At 12, XSSH uses its original 8x12 font and 80x24 terminal grid.
 font_size=12
+font_style=cousine
+
+# Text smoothing: no (sharp bitmap, default) | yes (grayscale antialiasing)
+text_antialiasing=no
+
+# Font appearance (choose one):
+# font_style=bold             - DejaVu Sans Mono Bold
+# font_style=regular          - DejaVu Sans Mono Regular
+# font_style=cousine          - Cousine Regular (default)
+# font_style=cousine_bold     - Cousine Bold
+# Font styles are compiled into the XBE as bitmaps: no .ttf files required.
+# Invalid values are rejected rather than silently changed.
 
 # Examples: choose ONE, replacing font_size=12 above.
 #font_size=8
-#font_size=10
+#font_size=12
 #font_size=14
 #font_size=16
 #font_size=20
@@ -94,7 +110,7 @@ font_size=12
 # The UI headings, status/footer, and on-screen controller keyboard retain
 # their original sizes. Only the terminal text and its grid change.
 # XSSH requests the corresponding PTY columns/rows from the SSH server.
-# Restart XSSH after changing font_size. The original bitmap is scaled;
+# Restart XSSH after changing font_size or font_style. The selected bitmap is scaled;
 # no new font file is required. This is a logical size, scaled with video_mode.
 
 # ==============================================================
@@ -147,3 +163,18 @@ network_gateway=192.168.1.1
 # There are no xssh.cfg options for the password, DNS names, terminal size,
 # USB keyboard layout, or SSH private keys in this version of XSSH.
 # ==============================================================
+
+# Ctrl+F cycles font styles while XSSH is running.
+# ANSI colors from SSH apps are supported; app chrome keeps Xbox themes.
+
+# Front Xbox LED: auto | green | red | orange | off | blink_green | blink_red | alternate
+# auto: orange while connecting, green when connected, red on error, off in screensaver.
+led_mode=auto
+
+# Low-CPU raw RGB565 video screensaver; keeps SSH connected while playing.
+# Wakes with any key or controller button. No sound/codec decoding.
+screensaver_enabled=yes
+screensaver_seconds=120
+screensaver_file=D:\screensaver.xsv
+
+# Ctrl+A toggles antialiasing at runtime without saving to this file.
