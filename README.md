@@ -19,3 +19,5 @@ sha256sum bin/default.xbe release/default.xbe
 ## Please see xssh.cfg for config options
 
 ## Install by dragging all files in release to E:/Apps/XSSH
+
+## If you are worried about security, please use https://github.com/jws325/Xbox-ssh-client/blob/main/tools/make-seed.py to generate a unique xssh-seed.bin
