@@ -1,5 +1,18 @@
 # XSSH — original Xbox SSH2 terminal (nxdk)
 
+## Features:
+
+Full color support\
+Unicode support\
+Native Xbox resolution supported\
+Antialiased text\
+Multiple fonts\
+Video screensaver support\
+Xbox LED control supported\
+Exit, reboot, or shutdown from app\
+USB keyboard supported\
+and more!
+
 ## To build from source:
 
 ```sh
