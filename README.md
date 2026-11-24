@@ -65,6 +65,14 @@ All other resolutions work ok.\
 
 ## Screenshots
 
+<img width="859" height="827" alt="Screenshot 2026-11-24 6 27 22 PM" src="https://github.com/user-attachments/assets/33311d2b-b9b4-4e9f-ae5b-83ebfa0b3e64" />
+
+<img width="859" height="842" alt="Screenshot 2026-11-24 6 28 01 PM" src="https://github.com/user-attachments/assets/ec07af43-377d-4baa-984c-8be3ced5c939" />
+
+<img width="858" height="817" alt="Screenshot 2026-11-24 6 28 26 PM" src="https://github.com/user-attachments/assets/c87e7045-7e8f-4ca9-98b5-5f392fbb21aa" />
+
+<img width="865" height="781" alt="Screenshot 2026-11-24 6 29 33 PM" src="https://github.com/user-attachments/assets/3a2e2085-1deb-4d93-a828-1accd458a3a9" />
+
 <img width="1170" height="1047" alt="cmatrix" src="https://github.com/user-attachments/assets/bcb856cd-ef7f-45f3-9531-910a482ec0c8" />
 
 <img width="1170" height="1156" alt="btop" src="https://github.com/user-attachments/assets/a766eee2-4971-4ed4-a661-8380263ef60f" />
