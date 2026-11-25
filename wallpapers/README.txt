@@ -1,6 +1,5 @@
 Put uncompressed 32-bit X8R8G8B8 BMP wallpapers here.
 Only .bmp files with BITMAPINFOHEADER, BI_RGB, 32 bits/pixel, and zero unused X bytes are accepted.
-Maximum image size: 1024 x 768. Images scale to 640 x 480.
 Use Ctrl+Shift+B to cycle valid images; Ctrl+Shift+O to increase opacity (hold to cycle 0..100).
 Set wallpaper=D:\wallpapers\example.bmp and wallpaper_opacity=50 in D:\xssh.cfg.
 
